@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Healthcare Management System">
+    <meta name="author" content="">
+
+    <title>Healthcare Management System - Doctor Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --background-color: #f0f9ff;
+            --text-color: #1e293b;
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--background-color) 0%, #ffffff 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav > li > a {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav > li > a:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: var(--text-color);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table > thead > tr > th {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .table > tbody > tr > td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .modal-content {
+            border-radius: 16px;
+            border: none;
+        }
+
+        .modal-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border-radius: 16px 16px 0 0;
+            padding: 1.5rem;
+        }
+
+        .modal-title {
+            font-weight: 700;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h5 {
+            color: var(--text-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+
+        .badge-primary {
+            background-color: var(--primary-color);
+        }
+
+        .form-control-static {
+            padding: 0.75rem 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out;
+    }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat mr-2"></i>
+                    Healthcare Management
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" id="userNameDisplay"></a></li>
+                    <li><a href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Doctor Information Section -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card animated">
+                    <h3><i class="fas fa-user-md"></i> Doctor Information</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <p id="doctorName" class="form-control-static"></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <p id="doctorAge" class="form-control-static"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accessible Patients Section -->
+                <div class="row">
+            <div class="col-md-12">
+                <div class="card animated">
+                    <h3><i class="fas fa-users"></i> Accessible Patients</h3>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Blood Type</th>
+                                    <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody id="patientsTable">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Details Modal -->
+        <div class="modal fade" id="patientDetailsModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><i class="fas fa-user"></i> Patient Details</h4>
+            </div>
+                    <div class="modal-body">
+                        <!-- Patient Information -->
+                        <div class="section">
+                            <h5><i class="fas fa-info-circle"></i> Personal Information</h5>
+                <div class="row">
+                                <div class="col-md-4">
+                                    <p><strong>Name:</strong> <span id="modalPatientName"></span></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><strong>Age:</strong> <span id="modalPatientAge"></span></p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p><strong>Blood Type:</strong> <span id="modalBloodType"></span></p>
+                                </div>
+                    </div>
+                </div>
+
+                        <!-- Medical History -->
+                        <div class="section">
+                            <h5><i class="fas fa-notes-medical"></i> Medical History</h5>
+                <div class="row">
+                                <div class="col-md-4">
+                                    <h6><i class="fas fa-allergies"></i> Allergies</h6>
+                                    <ul id="modalAllergiesList" class="list-group">
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6><i class="fas fa-pills"></i> Current Medications</h6>
+                                    <ul id="modalMedicationsList" class="list-group">
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6><i class="fas fa-heartbeat"></i> Medical Conditions</h6>
+                                    <ul id="modalConditionsList" class="list-group">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Visit Form -->
+                        <div class="section">
+                            <h5><i class="fas fa-plus-circle"></i> Add New Visit</h5>
+                            <form id="addVisitForm">
+                                <input type="hidden" id="visitPatientId">
+                                <div class="form-group">
+                                    <label>Reason for Visit</label>
+                                    <input type="text" class="form-control" id="visitReason" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    <textarea class="form-control" id="visitNotes" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus mr-1"></i> Add Visit
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Recent Visits -->
+                        <div class="section">
+                            <h5><i class="fas fa-history"></i> Recent Visits</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Reason</th>
+                                            <th>Notes</th>
+                            </tr>
+                                    </thead>
+                                    <tbody id="modalVisitsTable">
+                                    </tbody>
+                        </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+
+    <!-- Scripts -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+        let currentUser = null;
+
+        window.addEventListener('load', function() {
+            initializeAppData();
+            
+            currentUser = getCurrentUser();
+            if (!currentUser || currentUser.userType !== 'doctor') {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('userNameDisplay').innerHTML = `<i class="fas fa-user-md"></i> ${currentUser.fullName}`;
+            loadDoctorData();
+            loadAccessiblePatients();
+        });
+
+        function loadDoctorData() {
+            const user = getUserById(currentUser.userId);
+            if (user) {
+                document.getElementById('doctorName').textContent = user.fullName;
+                document.getElementById('doctorAge').textContent = user.age;
+            }
+        }
+
+        function loadAccessiblePatients() {
+            const patients = getAccessiblePatients(currentUser.userId);
+            const tbody = document.getElementById('patientsTable');
+            tbody.innerHTML = patients.length ? patients.map(patient => `
+                <tr>
+                    <td>${patient.fullName}</td>
+                    <td>${patient.age}</td>
+                    <td>${getPatientRecords(patient.userId).generalInfo.bloodType || 'Not specified'}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="viewPatientDetails('${patient.userId}')">
+                            <i class="fas fa-eye mr-1"></i> View Details
+                        </button>
+                    </td>
+                </tr>
+            `).join('') : '<tr><td colspan="4" class="text-center">No accessible patients found</td></tr>';
+        }
+
+        function viewPatientDetails(patientId) {
+            const patient = getUserById(patientId);
+            const records = getPatientRecords(patientId);
+
+            document.getElementById('modalPatientName').textContent = patient.fullName;
+            document.getElementById('modalPatientAge').textContent = patient.age;
+            document.getElementById('modalBloodType').textContent = records.generalInfo.bloodType || 'Not specified';
+            document.getElementById('visitPatientId').value = patientId;
+
+            updateModalList('modalAllergiesList', records.generalInfo.allergies || []);
+            updateModalList('modalMedicationsList', records.generalInfo.currentMedications ? records.generalInfo.currentMedications.split('\n').filter(med => med.trim()) : []);
+            updateModalList('modalConditionsList', records.generalInfo.medicalConditions ? records.generalInfo.medicalConditions.split('\n').filter(condition => condition.trim()) : []);
+
+            updateModalVisitsTable(records.visits || []);
+
+            $('#patientDetailsModal').modal('show');
+        }
+
+        function updateModalList(elementId, items) {
+            const list = document.getElementById(elementId);
+            list.innerHTML = items.length ? items.map(item => 
+                `<li class="list-group-item">${item}</li>`
+            ).join('') : '<li class="list-group-item text-muted">None specified</li>';
+        }
+
+        function updateModalVisitsTable(visits) {
+            const tbody = document.getElementById('modalVisitsTable');
+            tbody.innerHTML = visits.length ? visits.map(visit => `
+                <tr>
+                    <td>${new Date(visit.date).toLocaleDateString()}</td>
+                    <td>${visit.reason}</td>
+                    <td>${visit.notes}</td>
+                </tr>
+            `).join('') : '<tr><td colspan="3" class="text-center">No visits recorded</td></tr>';
+        }
+
+        document.getElementById('addVisitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const patientId = document.getElementById('visitPatientId').value;
+            const reason = document.getElementById('visitReason').value;
+            const notes = document.getElementById('visitNotes').value;
+
+            const visitData = {
+                doctorId: currentUser.userId,
+                doctorName: currentUser.fullName,
+                reason: reason,
+                notes: notes,
+                date: new Date().toISOString()
+            };
+
+            const records = getPatientRecords(patientId);
+            if (!records.visits) records.visits = [];
+            records.visits.push(visitData);
+            updatePatientRecords(patientId, { visits: records.visits });
+            
+            this.reset();
+            updateModalVisitsTable(records.visits);
+            
+            // Show success message
+            alert('Visit added successfully');
+        });
+
+        function handleLogout() {
+            clearCurrentUser();
+            window.location.href = 'index.html';
+    }
+</script>
+
+</body>
+
+</html>

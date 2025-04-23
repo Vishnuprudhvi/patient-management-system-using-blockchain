@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Healthcare Management System">
+    <meta name="author" content="">
+
+    <title>Healthcare Management System - Login</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --background-color: #f0f9ff;
+            --text-color: #1e293b;
+            --error-color: #ef4444;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--background-color) 0%, #ffffff 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav > li > a {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav > li > a:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .login-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2.5rem;
+            margin-top: 4rem;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-panel h2 {
+            color: var(--text-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            opacity: 0.5;
+        }
+
+        .form-control {
+            height: 48px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .btn-primary {
+            height: 48px;
+            background-color: var(--primary-color);
+            border: none;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            margin-top: 1rem;
+            display: none;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .create-account-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .create-account-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .create-account-link a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+
+    <script src="js/bundle.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat mr-2"></i>
+                    Healthcare Management
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="register.html">Create Account</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="login-panel animated">
+                    <h2>Welcome Back</h2>
+                    <form id="loginForm" onsubmit="return handleLogin(event)">
+                        <div class="form-group">
+                            <label for="userId">User ID</label>
+                            <i class="fas fa-user"></i>
+                            <input type="text" class="form-control" id="userId" placeholder="Enter your user ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Sign In
+                        </button>
+                        <div id="errorMessage" class="error-message"></div>
+                        <div class="create-account-link">
+                            Don't have an account? <a href="register.html">Create Account</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="login-footer">
+                    &copy; 2024 Healthcare Management System. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        // Initialize app data if not exists
+        window.addEventListener('load', function() {
+            initializeAppData();
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const userId = document.getElementById('userId').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+            
+            try {
+                // Attempt to authenticate user
+                const user = authenticateUser(userId, password);
+                
+                // Set current user in local storage
+                setCurrentUser(user);
+                
+                // Redirect based on user type
+                switch(user.userType) {
+                    case 'patient':
+                        window.location.href = 'patient.html';
+                        break;
+                    case 'doctor':
+                        window.location.href = 'doctor.html';
+                        break;
+                    case 'insurer':
+                        window.location.href = 'insurer.html';
+                        break;
+                    default:
+                        throw new Error('Invalid user type');
+                }
+            } catch (error) {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = error.message || 'Invalid credentials. Please try again.';
+            }
+            
+            return false;
+        }
+    </script>
+
+</body>
+
+</html>

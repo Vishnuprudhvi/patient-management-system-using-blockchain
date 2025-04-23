@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Healthcare Management System">
+    <meta name="author" content="">
+    
+    <title>Healthcare Management System - Patient Dashboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --background-color: #f0f9ff;
+            --text-color: #1e293b;
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+        }
+
+    body {
+            background: linear-gradient(135deg, var(--background-color) 0%, #ffffff 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav > li > a {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav > li > a:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: var(--text-color);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-control {
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table > thead > tr > th {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--text-color);
+            font-weight: 600;
+            padding: 1rem;
+        }
+
+        .table > tbody > tr > td {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .list-group-item {
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group-btn .btn {
+            height: 45px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .form-control-static {
+            padding: 0.75rem 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+
+        .select-wrapper {
+        position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+        position: absolute;
+            right: 1rem;
+        top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out;
+    }
+    </style>
+
+</head>
+
+<body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">
+                        <i class="fas fa-heartbeat mr-2"></i>
+                        Healthcare Management
+                    </a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" id="userNameDisplay"></a></li>
+                        <li><a href="#" onclick="handleLogout()"><i class="fas fa-sign-out-alt mr-1"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Personal Information Section -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card animated">
+                        <h3><i class="fas fa-user"></i> Personal Information</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <p id="patientName" class="form-control-static"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Age</label>
+                                    <p id="patientAge" class="form-control-static"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Blood Type</label>
+                                    <div class="select-wrapper">
+                                        <select class="form-control" id="bloodType">
+                                            <option value="">Select Blood Type</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                        </select>
+                                    </div>
+                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Medical History Section -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card animated">
+                        <h3><i class="fas fa-notes-medical"></i> Medical History</h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Allergies</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="allergyInput" placeholder="Add allergy">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" onclick="addAllergy()">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <ul id="allergiesList" class="list-group mt-3"></ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Current Medications</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="medicationInput" placeholder="Add medication">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" onclick="addMedication()">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </span>
+                </div>
+                                    <ul id="medicationsList" class="list-group mt-3"></ul>
+                        </div>
+                    </div>
+                            <div class="col-md-4">
+                        <div class="form-group"> 
+                                    <label>Medical Conditions</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="conditionInput" placeholder="Add condition">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="button" onclick="addCondition()">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                    <ul id="conditionsList" class="list-group mt-3"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Visits Section -->
+                    <div class="row">
+                <div class="col-md-12">
+                    <div class="card animated">
+                        <h3><i class="fas fa-history"></i> Recent Visits</h3>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Doctor</th>
+                                        <th>Reason</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="visitsTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctor Access Management Section -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card animated">
+                        <h3><i class="fas fa-user-md"></i> Doctor Access Management</h3>
+                    <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Grant Access to Doctor</label>
+                                    <div class="select-wrapper">
+                                        <select class="form-control" id="doctorSelect">
+                                            <option value="">-- Select Doctor --</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-primary mt-3" onclick="grantAccess()">
+                                        <i class="fas fa-user-plus mr-1"></i> Grant Access
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Current Access List</label>
+                                    <ul id="accessList" class="list-group">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+<script src="/js/web3.min.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var key ;
+
+    toggleRecordsButton = 0;
+    var recordHash = "";
+
+    $(window).load(function() {
+        connect();
+        $("#records").hide();
+        $(".alert-info").hide();
+        $(".alert-danger").hide();
+        key = web3.currentProvider.selectedAddress;
+        key = key.toLocaleLowerCase();
+
+        var a = "";
+        var b = 0;
+        var ailments = [];
+        var insurerName = "";
+
+        $("#buyInsurance").hide();
+        $("#insuranceInfo").hide();
+        
+        // print patient details and insurer details (if exists). If insurer does not exist show the buy insurance panel
+        console.log("Getting Patient Data");
+        contractInstance.get_patient.call(key, {gas: 1000000}, function(error, result){
+            console.log("Patient Data Result:"+result);
+            if(!error){
+                console.log(result);
+                a = result[0]; 
+                b = result[1];
+                ailments = result[2];
+                insurerAddress = result[3];
+                recordHash = result[4];
+                $("#patientName").html(a);
+                $("#patientAge").html(b.c[0]);
+                $("#recordsHash").html(recordHash);
+
+                if (insurerAddress != 0){
+                    $("#buyInsurance").hide();
+
+
+                } else {
+                    var InsurerList = 0;
+                    
+                    contractInstance.get_insurer_list({gas: 1000000}, function(error, result){
+
+                        if(!error){
+                            
+                            InsurerList = result;
+                            var list = document.getElementById("insurers");
+                            for (var i = 0; i < InsurerList.length; i++) {
+                                
+                                contractInstance.get_insurer.call(InsurerList[i], {gas: 1000000}, function(error, result){
+                                    
+                                    
+                                    if(!error){
+                                        d = result[0];
+
+                                        var option = document.createElement("option");
+                                        option.text = d;
+
+                                        list.add(option);
+                                    } else{
+                                        console.log(error);
+                                    }
+                                })
+                            }
+                        }
+                    })
+                    $("#buyInsurance").show();
+
+                    $("#insuranceInfo").hide();
+                }
+            }
+            else
+                console.error(error);
+        });
+        
+        // print out the doctors to share emr
+        var DoctorList = 0;
+        console.log("Getting Doctor List");
+        contractInstance.get_doctor_list({gas: 1000000},function(error, result){
+
+            if(!error) {
+
+                DoctorList = result;
+
+                for(var i = 0; i < DoctorList.length; i++) {
+                    contractInstance.get_doctor.call(DoctorList[i], {gas: 1000000},function(error, result){
+
+                        var list = document.getElementById("permitDoctorList");
+
+                        if(!error) {
+                            [a, b] = result; 
+                            var option = document.createElement("option");
+                            option.text = a;
+                            list.add(option);
+                            // console.log(a);
+                        }
+                        else
+                            console.error(error);
+                    })
+                }
+            } 
+            else
+                console.error(error);
+        });
+
+        // print out the doctors who have access
+        var doctorAddressList = 0;
+        contractInstance.get_accessed_doctorlist_for_patient(key, {gas: 1000000}, function(error, result){
+            if(!error){
+                doctorAddressList = result;
+                // console.log(result);
+                
+               
+                doctorAddressList.forEach(function(doctorAddress, index){
+                    contractInstance.get_doctor.call(doctorAddress, {gas: 1000000}, function(error, result){
+                        var table = document.getElementById("accessDoc");
+                        if(!error) {
+                            [a,b] = result;
+                            console.log(a);
+                            var row = table.insertRow(index+1);
+                            var cell1 = row.insertCell(0);
+                            var cell2 = row.insertCell(1);
+                            var cell3 = row.insertCell(2);
+                            cell2.className = "publicKeyDoctor";
+                            cell1.innerHTML = a;
+                            cell2.innerHTML = doctorAddress;
+                            cell3.innerHTML = '<button onclick="revokeAccess(this)" class="btn btn-danger">Revoke access</button>';
+                            console.log(result);
+                        }
+                        else
+                            console.error(error);
+                    })
+                })
+            }
+            else 
+                console.error(error);
+        });
+
+    });
+    function showRecords(element){
+        if (toggleRecordsButton%2 == 0){
+
+            $.get("http://localhost:8080/ipfs/"+recordHash, function(data){
+                $("#records").html(data);
+                $("#records").show();
+            })
+
+            toggleRecordsButton +=1
+
+            element.innerHTML = "Hide Medical Records";
+            element.className = "btn btn-info btn-lg";
+        } else{
+            $("#records").hide();
+            toggleRecordsButton -=1;
+            element.innerHTML = "View Medical Records";
+            element.className = "btn btn-info btn-lg"
+        }
+        
+    }
+
+    
+
+    function giveAccess() {
+
+        var list = document.getElementById("permitDoctorList");
+        index = list.selectedIndex;
+
+        var DoctorList = 0;
+
+        contractInstance.get_doctor_list({gas: 1000000}, function(error, result){
+
+            if(!error) {
+                // console.log(index);
+
+                DoctorList = result;
+                doctorToBeAdded = DoctorList[index-1];
+                contractInstance.permit_access.sendTransaction(doctorToBeAdded, {from: key, gas: 1000000, value: web3.toWei(2, 'ether')}, function(error){
+                    if (!error) {
+                        var table = document.getElementById("accessDoc");
+                        noRows = table.rows.length;
+                        var row = table.insertRow(noRows);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+
+                        cell2.className = "publicKeyDoctor";
+                        cell1.innerHTML = $("#permitDoctorList").val();
+                        cell2.innerHTML = doctorToBeAdded;
+                        cell3.innerHTML = '<button onclick="revokeAccess(this)" class="btn btn-danger">Revoke access</button>';
+
+                    } else {
+                        $(".alert-info").show();
+                        console.log(error);
+                    }
+                                            
+                })
+
+            } else
+                console.log(error);
+        })
+    }
+
+    function revokeAccess(element) {
+
+        rowNo = element.parentNode.parentNode.rowIndex;
+        Row = element.parentNode.parentNode;
+        var Cells = Row.getElementsByTagName("td");
+        var docKey = Row.cells[1].firstChild.nodeValue;
+        contractInstance.revoke_access(docKey, {gas: 1000000}, function(error){
+            if (!error) {
+                document.getElementById("accessDoc").deleteRow(rowNo);
+            } else {
+                $(".alert-danger").show();
+                console.log(error);
+            }
+                                    
+        });
+    }
+
+    window.addEventListener('load', function() {
+        initializeAppData();
+        loadUserData();
+        loadDoctorsList();
+        loadAuthorizedDoctors();
+    });
+
+    // Handle blood type change
+    document.getElementById('bloodType').addEventListener('change', function() {
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            updatePatientRecords(currentUser.userId, {
+                bloodType: this.value
+            });
+        }
+    });
+
+    // Add allergy
+    function addAllergy() {
+        const allergyInput = document.getElementById('allergyInput');
+        const allergy = allergyInput.value.trim();
+        
+        if (allergy) {
+            const currentUser = getCurrentUser();
+            const records = getPatientRecords(currentUser.userId);
+            const allergies = records.generalInfo.allergies || [];
+            
+            if (!allergies.includes(allergy)) {
+                allergies.push(allergy);
+                updatePatientRecords(currentUser.userId, {
+                    allergies: allergies
+                });
+                
+                // Update display
+                const allergiesList = document.getElementById('allergiesList');
+                allergiesList.innerHTML += `
+                    <li class="list-group-item">
+                        ${allergy}
+                        <button class="btn btn-danger btn-sm" onclick="removeItem(this, 'allergies')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </li>`;
+                
+                // Clear input
+                allergyInput.value = '';
+            }
+        }
+    }
+
+    // Add medication
+    function addMedication() {
+        const medicationInput = document.getElementById('medicationInput');
+        const medication = medicationInput.value.trim();
+        
+        if (medication) {
+            const currentUser = getCurrentUser();
+            const records = getPatientRecords(currentUser.userId);
+            let medications = records.generalInfo.currentMedications || '';
+            
+            if (medications) {
+                medications += '\n' + medication;
+            } else {
+                medications = medication;
+            }
+            
+            updatePatientRecords(currentUser.userId, {
+                currentMedications: medications
+            });
+            
+            // Update display
+            const medicationsList = document.getElementById('medicationsList');
+            medicationsList.innerHTML += `
+                <li class="list-group-item">
+                    ${medication}
+                    <button class="btn btn-danger btn-sm" onclick="removeItem(this, 'medications')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </li>`;
+            
+            // Clear input
+            medicationInput.value = '';
+        }
+    }
+
+    // Add medical condition
+    function addCondition() {
+        const conditionInput = document.getElementById('conditionInput');
+        const condition = conditionInput.value.trim();
+        
+        if (condition) {
+            const currentUser = getCurrentUser();
+            const records = getPatientRecords(currentUser.userId);
+            let conditions = records.generalInfo.medicalConditions || '';
+            
+            if (conditions) {
+                conditions += '\n' + condition;
+            } else {
+                conditions = condition;
+            }
+            
+            updatePatientRecords(currentUser.userId, {
+                medicalConditions: conditions
+            });
+            
+            // Update display
+            const conditionsList = document.getElementById('conditionsList');
+            conditionsList.innerHTML += `
+                <li class="list-group-item">
+                    ${condition}
+                    <button class="btn btn-danger btn-sm" onclick="removeItem(this, 'conditions')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </li>`;
+            
+            // Clear input
+            conditionInput.value = '';
+        }
+    }
+
+    // Remove item from list
+    function removeItem(element, type) {
+        const item = element.parentElement;
+        const value = item.textContent.trim();
+        const currentUser = getCurrentUser();
+        const records = getPatientRecords(currentUser.userId);
+        
+        switch(type) {
+            case 'allergies':
+                const allergies = records.generalInfo.allergies.filter(a => a !== value);
+                updatePatientRecords(currentUser.userId, { allergies });
+                break;
+            case 'medications':
+                const medications = records.generalInfo.currentMedications.split('\n')
+                    .filter(m => m.trim() !== value).join('\n');
+                updatePatientRecords(currentUser.userId, { currentMedications: medications });
+                break;
+            case 'conditions':
+                const conditions = records.generalInfo.medicalConditions.split('\n')
+                    .filter(c => c.trim() !== value).join('\n');
+                updatePatientRecords(currentUser.userId, { medicalConditions: conditions });
+                break;
+        }
+        
+        item.remove();
+    }
+
+    // Load available doctors
+    function loadDoctorsList() {
+        const doctors = getAllDoctors();
+        const doctorSelect = document.getElementById('doctorSelect');
+        
+        // Clear existing options except the first one
+        while (doctorSelect.options.length > 1) {
+            doctorSelect.remove(1);
+        }
+        
+        // Add doctors to select
+        doctors.forEach(doctor => {
+            const option = document.createElement('option');
+            option.value = doctor.userId;
+            option.textContent = `Dr. ${doctor.fullName} (${doctor.age} years)`;
+            doctorSelect.appendChild(option);
+        });
+    }
+
+    // Load authorized doctors
+    function loadAuthorizedDoctors() {
+        const currentUser = getCurrentUser();
+        if (!currentUser) return;
+
+        const authorizedDoctors = getAuthorizedDoctors(currentUser.userId);
+        const accessList = document.getElementById('accessList');
+        
+        accessList.innerHTML = authorizedDoctors.map(doctor => `
+            <li class="list-group-item">
+                <div>
+                    <strong>Dr. ${doctor.fullName}</strong>
+                    <br>
+                    <small class="text-muted">Age: ${doctor.age}</small>
+                </div>
+                <button class="btn btn-danger btn-sm" onclick="handleRevokeAccess('${doctor.userId}')">
+                    <i class="fas fa-user-minus"></i> Revoke Access
+                </button>
+            </li>
+        `).join('') || '<li class="list-group-item">No doctors have been granted access yet.</li>';
+    }
+
+    // Grant access to doctor
+    function grantAccess() {
+        const currentUser = getCurrentUser();
+        const doctorSelect = document.getElementById('doctorSelect');
+        const selectedDoctorId = doctorSelect.value;
+        
+        if (!selectedDoctorId) {
+            alert('Please select a doctor');
+            return;
+        }
+        
+        try {
+            const granted = giveDoctorAccess(currentUser.userId, selectedDoctorId);
+            if (granted) {
+                loadAuthorizedDoctors(); // Refresh the list
+                doctorSelect.value = ''; // Reset selection
+                alert('Access granted successfully');
+            } else {
+                alert('Doctor already has access');
+            }
+        } catch (error) {
+            alert(error.message || 'Failed to grant access');
+        }
+    }
+
+    // Revoke access from doctor
+    function handleRevokeAccess(doctorId) {
+        if (!confirm('Are you sure you want to revoke access from this doctor?')) {
+            return;
+        }
+        
+        const currentUser = getCurrentUser();
+        try {
+            const revoked = revokeDoctorAccess(currentUser.userId, doctorId);
+            if (revoked) {
+                loadAuthorizedDoctors(); // Refresh the list
+                alert('Access revoked successfully');
+            } else {
+                alert('Failed to revoke access');
+            }
+        } catch (error) {
+            alert(error.message || 'Failed to revoke access');
+        }
+    }
+
+    function handleLogout() {
+        clearCurrentUser();
+        window.location.href = 'index.html';
+    }
+
+</script>
+
+</body>
+
+</html>

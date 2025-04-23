@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Healthcare Management System">
+    <meta name="author" content="">
+
+    <title>Healthcare Management System - Registration</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link href="css/styles.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --accent-color: #60a5fa;
+            --background-color: #f0f9ff;
+            --text-color: #1e293b;
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--background-color) 0%, #ffffff 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-color);
+            padding-top: 70px;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav > li > a {
+            color: var(--text-color) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav > li > a:hover {
+            color: var(--primary-color) !important;
+        }
+
+        .registration-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .registration-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .registration-panel h2 {
+            color: var(--text-color);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            height: 45px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .btn-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0;
+            font-weight: 500;
+        }
+
+        .btn-link:hover {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        .alert {
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: none;
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            color: var(--error-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group .form-control {
+            padding-right: 2.5rem;
+        }
+
+        .input-group .input-group-addon {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-heartbeat mr-2"></i>
+                    Healthcare Management
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="index.html"><i class="fas fa-sign-in-alt mr-1"></i> Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="registration-panel animated">
+            <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+                        <span class="input-group-addon">
+                            <i class="fas fa-user"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Age</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="age" placeholder="Enter your age" required>
+                        <span class="input-group-addon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>User Type</label>
+                    <div class="select-wrapper">
+                        <select class="form-control" id="userType" required>
+                            <option value="">-- Select User Type --</option>
+                            <option value="patient">Patient</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="insurer">Insurer</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                        <span class="input-group-addon">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+                <div class="text-center">
+                    <a href="index.html" class="btn-link">
+                        <i class="fas fa-arrow-left mr-1"></i> Back to Login
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            initializeAppData();
+
+            $('#registrationForm').submit(function(e) {
+                e.preventDefault();
+                
+                const name = $('#name').val().trim();
+                const age = parseInt($('#age').val());
+                const userType = $('#userType').val();
+                const password = $('#password').val();
+                
+                if (!name || !age || !userType || !password) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (age < 0 || age > 120) {
+                    alert('Please enter a valid age');
+                    return;
+                }
+                
+                try {
+                    const userId = 'user_' + Date.now();
+                    const user = {
+                        userId,
+                        fullName: name,
+                        age,
+                        userType,
+                        password
+                    };
+                    
+                    addUser(user);
+                    setCurrentUser(user);
+                    
+                    // Redirect based on user type
+                    switch(userType) {
+                        case 'patient':
+                            window.location.href = 'patient.html';
+                            break;
+                        case 'doctor':
+                            window.location.href = 'doctor.html';
+                            break;
+                        case 'insurer':
+                            window.location.href = 'insurer.html';
+                            break;
+                    }
+                } catch (error) {
+                    alert('Registration failed: ' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
